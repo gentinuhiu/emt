@@ -3,6 +3,8 @@ package emt.lab.service.domain.impl;
 import emt.lab.model.domain.Author;
 import emt.lab.repository.AuthorRepository;
 import emt.lab.service.domain.AuthorService;
+import emt.lab.event.AuthorChangedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,12 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
+    private final ApplicationEventPublisher publisher;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
+
+    public AuthorServiceImpl(AuthorRepository authorRepository, ApplicationEventPublisher publisher) {
         this.authorRepository = authorRepository;
+        this.publisher = publisher;
     }
 
     @Override
@@ -30,11 +35,14 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteById(Long id) {
         Author author = findById(id).get();
         authorRepository.delete(author);
+        publisher.publishEvent(new AuthorChangedEvent(author));
     }
 
     @Override
     public Optional<Author> save(Author author) {
-        return Optional.of(authorRepository.save(author));
+        authorRepository.save(author);
+        publisher.publishEvent(new AuthorChangedEvent(author));
+        return Optional.of(author);
     }
 
     @Override
@@ -49,7 +57,9 @@ public class AuthorServiceImpl implements AuthorService {
             if(author.getCountry() != null){
                 existingAuthor.setCountry(author.getCountry());
             }
-            return authorRepository.save(existingAuthor);
+            authorRepository.save(existingAuthor);
+            publisher.publishEvent(new AuthorChangedEvent(existingAuthor));
+            return existingAuthor;
         });
     }
 }

@@ -11,6 +11,7 @@ import emt.lab.repository.CountryRepository;
 import emt.lab.service.domain.UserService;
 import emt.lab.service.domain.impl.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,14 +23,17 @@ public class DataInitializer {
     private final AuthorRepository authorRepository;
     private final CopyRepository copyRepository;
     private final UserService userService;
+    private final JdbcTemplate jdbcTemplate;
 
     public DataInitializer(CountryRepository countryRepository, BookRepository bookRepository,
-                           AuthorRepository authorRepository, CopyRepository copyRepository, UserService userService) {
+                           AuthorRepository authorRepository, CopyRepository copyRepository, UserService userService,
+                           JdbcTemplate jdbcTemplate) {
         this.countryRepository = countryRepository;
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.copyRepository = copyRepository;
         this.userService = userService;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @PostConstruct
@@ -62,5 +66,8 @@ public class DataInitializer {
 
         userService.register("string", "string", "string", "string", "string", ROLE.LIBRARIAN);
         userService.register("string2", "string2", "string2", "string2", "string2", ROLE.LIBRARIAN);
+
+        jdbcTemplate.execute("REFRESH MATERIALIZED VIEW books_by_author");
+        jdbcTemplate.execute("REFRESH MATERIALIZED VIEW authors_by_country");
     }
 }

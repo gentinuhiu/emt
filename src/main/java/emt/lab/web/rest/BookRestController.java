@@ -2,7 +2,10 @@ package emt.lab.web.rest;
 
 import emt.lab.dto.create.CreateBookDto;
 import emt.lab.dto.display.DisplayBookDto;
+import emt.lab.dto.display.DisplayBooksByAuthorDto;
+import emt.lab.model.domain.BooksByAuthor;
 import emt.lab.service.application.BookApplicationService;
+import emt.lab.service.application.BooksByAuthorApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,11 @@ import java.util.List;
 public class BookRestController {
 
     private final BookApplicationService bookApplicationService;
+    private final BooksByAuthorApplicationService booksByAuthorApplicationService;
 
-    public BookRestController(BookApplicationService bookApplicationService) {
+    public BookRestController(BookApplicationService bookApplicationService, BooksByAuthorApplicationService booksByAuthorApplicationService) {
         this.bookApplicationService = bookApplicationService;
+        this.booksByAuthorApplicationService = booksByAuthorApplicationService;
     }
 
     @GetMapping("/")
@@ -79,5 +84,9 @@ public class BookRestController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+    @GetMapping("/by-author")
+    public List<DisplayBooksByAuthorDto> getBooksByAuthor() {
+        return booksByAuthorApplicationService.findAll();
     }
 }
