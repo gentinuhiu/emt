@@ -2,6 +2,7 @@ package emt.lab.service.application.impl;
 
 import emt.lab.dto.create.CreateAuthorDto;
 import emt.lab.dto.display.DisplayAuthorDto;
+import emt.lab.model.projection.AuthorNameProjection;
 import emt.lab.service.application.AuthorApplicationService;
 import emt.lab.service.domain.AuthorService;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class AuthorApplicationServiceImpl implements AuthorApplicationService {
     @Override
     public Optional<DisplayAuthorDto> save(CreateAuthorDto createAuthorDto) {
         return authorService.save(createAuthorDto.toAuthor()).map(DisplayAuthorDto::from);
+    }
+
+    @Override
+    public List<AuthorNameProjection> findAllAuthorNames() {
+        return authorService.findAllAuthorNames();
     }
 }

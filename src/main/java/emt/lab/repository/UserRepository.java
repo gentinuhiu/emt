@@ -13,9 +13,13 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+    @EntityGraph(attributePaths = {"cart", "cart.rented"}) // 💡 NO cart.review here!
+    List<User> findAll();
 
+    @EntityGraph(attributePaths = {"cart", "cart.rented"})
     Optional<User> findByUsernameAndPassword(String username, String password);
 
+    @EntityGraph(attributePaths = {"cart", "cart.rented"})
     Optional<User> findByUsername(String username);
 
     @EntityGraph(

@@ -1,6 +1,7 @@
 package emt.lab.service.domain.impl;
 
 import emt.lab.model.domain.Author;
+import emt.lab.model.projection.AuthorNameProjection;
 import emt.lab.repository.AuthorRepository;
 import emt.lab.service.domain.AuthorService;
 import emt.lab.event.AuthorChangedEvent;
@@ -43,6 +44,11 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.save(author);
         publisher.publishEvent(new AuthorChangedEvent(author));
         return Optional.of(author);
+    }
+
+    @Override
+    public List<AuthorNameProjection> findAllAuthorNames() {
+        return authorRepository.findAllAuthorNames();
     }
 
     @Override

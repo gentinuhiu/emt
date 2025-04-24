@@ -15,6 +15,11 @@ public class Cart {
     @ManyToMany
     private List<Book> review;
     @OneToMany
+    @JoinTable(
+            name = "cart_rented_copies", // ✅ actual table name
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "copy_id")
+    )
     private List<Copy> rented;
 
     public Cart() {

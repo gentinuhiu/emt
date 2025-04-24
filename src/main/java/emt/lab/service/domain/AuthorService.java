@@ -2,6 +2,7 @@ package emt.lab.service.domain;
 
 
 import emt.lab.model.domain.Country;
+import emt.lab.model.projection.AuthorNameProjection;
 import emt.lab.repository.AuthorRepository;
 import emt.lab.repository.CountryRepository;
 import org.springframework.stereotype.Service;
@@ -16,4 +17,6 @@ public interface AuthorService {
     Optional<Author> update(Long id, Author author);
     void deleteById(Long id);
     Optional<Author> save(Author author);
+
+    List<AuthorNameProjection> findAllAuthorNames();
 }
