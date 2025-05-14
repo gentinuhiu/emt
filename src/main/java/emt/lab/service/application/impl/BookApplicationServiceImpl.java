@@ -33,7 +33,7 @@ public class BookApplicationServiceImpl implements BookApplicationService {
 
     @Override
     public Optional<DisplayBookDto> update(Long id, CreateBookDto createBookDto) {
-        Author author = authorService.findById(createBookDto.author()).get();
+        Author author = authorService.findById(createBookDto.authorId()).get();
         return bookService.update(id, createBookDto.toBook(author)).map(DisplayBookDto::from);
     }
 
@@ -49,7 +49,7 @@ public class BookApplicationServiceImpl implements BookApplicationService {
 
     @Override
     public Optional<DisplayBookDto> save(CreateBookDto createBookDto) {
-        Author author = authorService.findById(createBookDto.author()).get();
+        Author author = authorService.findById(createBookDto.authorId()).get();
         return bookService.save(createBookDto.toBook(author)).map(DisplayBookDto::from);
     }
 

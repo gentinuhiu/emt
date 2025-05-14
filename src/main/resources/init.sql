@@ -11,6 +11,15 @@ DROP TABLE IF EXISTS cart CASCADE;
 DROP TABLE IF EXISTS cart_review_books CASCADE;
 DROP TABLE IF EXISTS cart_rented_copies CASCADE;
 DROP TABLE IF EXISTS app_users CASCADE;
+DROP TABLE IF EXISTS auth_log CASCADE;
+
+CREATE TABLE auth_log (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255),
+    token TEXT,
+    expiration TIMESTAMP,
+    timestamp TIMESTAMP
+);
 
 CREATE TABLE country (
     id SERIAL PRIMARY KEY,

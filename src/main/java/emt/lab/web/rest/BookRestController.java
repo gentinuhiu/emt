@@ -19,6 +19,7 @@ import java.util.List;
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin("http://localhost:5173")
 @Tag(name = "Book API", description = "Operations related to books in the library")
 public class BookRestController {
 
@@ -30,7 +31,7 @@ public class BookRestController {
         this.booksByAuthorApplicationService = booksByAuthorApplicationService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(
             summary = "Get all books",
             description = "Retrieves a list of all books available in the library system."

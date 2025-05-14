@@ -3,6 +3,8 @@ package emt.lab.model.domain;
 import emt.lab.model.enumeration.CATEGORY;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,7 @@ public class BookHistory {
     private String title;
     private CATEGORY category;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Author author;
     @ManyToOne
     private Book book;

@@ -4,6 +4,7 @@ import emt.lab.model.domain.Author;
 import emt.lab.model.domain.Country;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public record DisplayAuthorDto(

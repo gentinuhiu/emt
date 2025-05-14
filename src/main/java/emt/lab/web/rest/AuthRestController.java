@@ -1,9 +1,14 @@
 package emt.lab.web.rest;
 
+import emt.lab.dto.display.DisplayAuthLogDto;
+import emt.lab.model.domain.AuthRequest;
 import emt.lab.model.domain.User;
 import emt.lab.repository.UserRepository;
+import emt.lab.service.application.AuthLogApplicationService;
+import emt.lab.service.application.impl.AuthLogApplicationServiceImpl;
 import emt.lab.service.domain.impl.JwtServiceImpl;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,6 +31,8 @@ public class AuthRestController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AuthLogApplicationService authLogApplicationService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
@@ -41,27 +49,9 @@ public class AuthRestController {
         User user = userRepository.findByUsername(username).orElseThrow();
         return ResponseEntity.ok(user);
     }
-
-}
-
-@Data
-class AuthRequest {
-    private String username;
-    private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @PreAuthorize("hasRole('LIBRARIAN')")
+    @GetMapping("/logs")
+    public List<DisplayAuthLogDto> getAllLogs(){
+        return authLogApplicationService.findAll();
     }
 }

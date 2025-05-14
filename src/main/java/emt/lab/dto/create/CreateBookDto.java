@@ -9,8 +9,8 @@ import java.util.List;
 
 public record CreateBookDto(
         String title,
-        CATEGORY category,
-        Long author
+        Long authorId,
+        CATEGORY category
 ) {
 
     public Book toBook(Author author){

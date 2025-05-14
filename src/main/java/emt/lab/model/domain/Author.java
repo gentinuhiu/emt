@@ -2,6 +2,8 @@ package emt.lab.model.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -12,6 +14,7 @@ public class Author {
     private String name;
     private String surname;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
 
     public Author(){}

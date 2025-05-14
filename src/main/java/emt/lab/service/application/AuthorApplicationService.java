@@ -15,4 +15,5 @@ public interface AuthorApplicationService {
     void deleteById(Long id);
     Optional<DisplayAuthorDto> save(CreateAuthorDto createAuthorDto);
     List<AuthorNameProjection> findAllAuthorNames();
+    DisplayAuthorDto saveByParameters(String name, String surname, Long countryId);
 }

@@ -65,7 +65,8 @@ public class DataInitializer {
         copyRepository.saveAll(List.of(copy1, copy2, copy3, copy4, copy5, copy6, copy7));
 
         userService.register("string", "string", "string", "string", "string", ROLE.LIBRARIAN);
-        userService.register("string2", "string2", "string2", "string2", "string2", ROLE.LIBRARIAN);
+        userService.register("string2", "string2", "string2", "string2", "string2", ROLE.CUSTOMER);
+        userService.register("string3", "string3", "string3", "string3", "string3", ROLE.CUSTOMER);
 
         jdbcTemplate.execute("REFRESH MATERIALIZED VIEW books_by_author");
         jdbcTemplate.execute("REFRESH MATERIALIZED VIEW authors_by_country");
