@@ -55,7 +55,7 @@ const useAuthors = () => {
 
     useEffect(() => {
         fetchAuthors();
-    }, [fetchAuthors()]);
+    }, [fetchAuthors]);
 
     return {...state, onAdd: onAdd, onEdit: onEdit, onDelete: onDelete};
 };

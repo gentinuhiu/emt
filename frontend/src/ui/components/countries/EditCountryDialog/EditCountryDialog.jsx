@@ -11,13 +11,11 @@ import {
 } from "@mui/material";
 import useCountries from "../../../../hooks/useCountries.js";
 
-const EditAuthorDialog = ({open, onClose, author, onEdit}) => {
+const EditCountryDialog = ({open, onClose, country, onEdit}) => {
     const [formData, setFormData] = useState({
-        "name": author.name,
-        "surname": author.surname,
-        "countryId": author.country.id,
+        "name": country.name,
+        "continent": country.continent,
     });
-    const countries = useCountries().countries;
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -25,14 +23,14 @@ const EditAuthorDialog = ({open, onClose, author, onEdit}) => {
     };
 
     const handleSubmit = () => {
-        onEdit(author.id, formData);
+        onEdit(country.id, formData);
         setFormData(formData);
         onClose();
     };
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Author</DialogTitle>
+            <DialogTitle>Edit Country</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -44,26 +42,13 @@ const EditAuthorDialog = ({open, onClose, author, onEdit}) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Surname"
-                    name="surname"
-                    value={formData.surname}
+                    label="Continent"
+                    name="continent"
+                    value={formData.continent}
                     onChange={handleChange}
                     fullWidth
                 />
 
-                <FormControl fullWidth margin="dense">
-                    <InputLabel>Country</InputLabel>
-                    <Select
-                        name="countryId"
-                        value={formData.countryId}
-                        onChange={handleChange}
-                        label="Country"
-                        variant="outlined">
-                        {countries?.map((country) => (
-                            <MenuItem key={country.id} value={country.id}>{country.name}, {country.continent}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
@@ -73,4 +58,4 @@ const EditAuthorDialog = ({open, onClose, author, onEdit}) => {
     );
 };
 
-export default EditAuthorDialog;
+export default EditCountryDialog;

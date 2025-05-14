@@ -11,11 +11,9 @@ import AuthorsList from "./ui/pages/AuthorsList.jsx";
 import BooksList from './ui/pages/BooksList.jsx';
 import BookDetails from "./ui/components/books/BookDetails/BookDetails.jsx";
 import AuthorDetails from "./ui/components/authors/AuthorDetails/AuthorDetails.jsx";
+import CountryDetails from "./ui/components/countries/CountryDetails/CountryDetails.jsx";
+import CountriesList from "./ui/pages/CountriesList.jsx";
 
-
-function CountriesList() {
-    return null;
-}
 
 function App() {
   return (
@@ -29,6 +27,7 @@ function App() {
                   <Route path="/authors" element={<AuthorsList/>}/>
                   <Route path="/authors/:id" element={<AuthorDetails/>}/>
                   <Route path="/countries" element={<CountriesList/>}/>
+                  <Route path="/countries/:id" element={<CountryDetails/>}/>
               </Routes>
           </Container>
       </>

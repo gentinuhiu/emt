@@ -20,7 +20,7 @@ const initialFormData = {
 
 const AddBookDialog = ({open, onClose, onAdd}) => {
     const [formData, setFormData] = useState(initialFormData);
-    const authors = useAuthors();
+    const authors = useAuthors().authors;
     const categories = useCategories();
 
     const handleChange = (event) => {

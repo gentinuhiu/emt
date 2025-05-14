@@ -1,10 +1,12 @@
 package emt.lab.service.domain.impl;
 
 import emt.lab.model.domain.Author;
+import emt.lab.model.domain.Book;
 import emt.lab.model.projection.AuthorNameProjection;
 import emt.lab.repository.AuthorRepository;
 import emt.lab.service.domain.AuthorService;
 import emt.lab.event.AuthorChangedEvent;
+import emt.lab.service.domain.BookService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,13 @@ import java.util.Optional;
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final ApplicationEventPublisher publisher;
+    private final BookService bookService;
 
 
-    public AuthorServiceImpl(AuthorRepository authorRepository, ApplicationEventPublisher publisher) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, ApplicationEventPublisher publisher, BookService bookService) {
         this.authorRepository = authorRepository;
         this.publisher = publisher;
+        this.bookService = bookService;
     }
 
     @Override
@@ -35,6 +39,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void deleteById(Long id) {
         Author author = findById(id).get();
+
+        List<Book> books = bookService.findAll();
+        books.stream().filter(b -> b.getAuthor().getId().equals(id)).forEach(b -> bookService.deleteById(b.getId()));
+
         authorRepository.delete(author);
         publisher.publishEvent(new AuthorChangedEvent(author));
     }

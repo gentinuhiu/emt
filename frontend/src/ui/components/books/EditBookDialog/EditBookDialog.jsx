@@ -19,7 +19,7 @@ const EditBookDialog = ({open, onClose, book, onEdit}) => {
         "category": book.category,
     });
     const categories = useCategories();
-    const authors = useAuthors();
+    const authors = useAuthors().authors;
 
     const handleChange = (event) => {
         const {name, value} = event.target;

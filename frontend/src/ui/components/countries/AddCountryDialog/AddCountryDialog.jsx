@@ -9,17 +9,14 @@ import {
     InputLabel, MenuItem, Select,
     TextField
 } from "@mui/material";
-import useCountries from "../../../../hooks/useCountries.js";
 
 const initialFormData = {
     "name": "",
-    "surname": "",
-    "countryId": "",
+    "continent": "",
 };
 
-const AddAuthorDialog = ({open, onClose, onAdd}) => {
+const AddCountryDialog = ({open, onClose, onAdd}) => {
     const [formData, setFormData] = useState(initialFormData);
-    const countries = useCountries().countries;
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -34,7 +31,7 @@ const AddAuthorDialog = ({open, onClose, onAdd}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Author</DialogTitle>
+            <DialogTitle>Add Country</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -46,25 +43,12 @@ const AddAuthorDialog = ({open, onClose, onAdd}) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Surname"
-                    name="surname"
-                    value={formData.surname}
+                    label="Continent"
+                    name="continent"
+                    value={formData.continent}
                     onChange={handleChange}
                     fullWidth
                 />
-                <FormControl fullWidth margin="dense">
-                    <InputLabel>Country</InputLabel>
-                    <Select
-                        name="countryId"
-                        value={formData.countryId}
-                        onChange={handleChange}
-                        label="Country"
-                        variant="outlined">
-                        {countries?.map((country) => (
-                            <MenuItem key={country.id} value={country.id}>{country.name}, {country.continent}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
@@ -74,4 +58,4 @@ const AddAuthorDialog = ({open, onClose, onAdd}) => {
     );
 };
 
-export default AddAuthorDialog;
+export default AddCountryDialog;

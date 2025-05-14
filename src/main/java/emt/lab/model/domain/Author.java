@@ -14,7 +14,6 @@ public class Author {
     private String name;
     private String surname;
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
 
     public Author(){}

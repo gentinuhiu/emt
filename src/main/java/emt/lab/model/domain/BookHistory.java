@@ -17,7 +17,6 @@ public class BookHistory {
     private String title;
     private CATEGORY category;
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Author author;
     @ManyToOne
     private Book book;
